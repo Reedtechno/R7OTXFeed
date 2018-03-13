@@ -21,7 +21,7 @@ if(Test-Path C:\temp\OTXLastRun.txt){
 }
 $Results =  Invoke-WebRequest "https://otx.alienvault.com:443/api/v1/indicators/export?modified_since=$LastRunDate&types=IPv4,hostname,domain,filehash-md5" -H @{"X-OTX-API-KEY" = "$OTXAPI"} | Select-Object -ExpandProperty Content
 $comma = 0
-ConvertFrom-Json $results | Select -expand results | Select -ExpandProperty indicator | ForEach-Object {
+ConvertFrom-Json $results | Select-Object -expand results | Select-Object -ExpandProperty indicator | ForEach-Object {
     
     If( $comma -eq 0){
     $String = $_
@@ -36,5 +36,5 @@ Get-Date -format o | Out-file C:\temp\OTXLastRun.txt
 
 
 Write-Host "IOCs uploaded:"
-ConvertFrom-Json $results | Select -expand results | Select -ExpandProperty indicator
+ConvertFrom-Json $results | Select-Object -expand results | Select-Object -ExpandProperty indicator
 
